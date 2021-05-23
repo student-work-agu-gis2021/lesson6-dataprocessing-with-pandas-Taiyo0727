@@ -4,7 +4,7 @@
 # # Exercise 6: Weather data calculation
 # 
 # ### Part 1 
-# 
+# pip
 # You should start by reading the data file.
 # 
 # - Read the data file into variable the variable `data`
@@ -118,6 +118,28 @@ print('Average temperature (F) for the Summer of 69:', round(avg_temp_1969, 2))
 monthly_data = None
 
 # YOUR CODE HERE 9
+def fahr_to_celsius(temp_fahrenheit):
+  converted_temp = (temp_fahrenheit -32) / 1.8
+  return converted_temp
+
+data['TAVG'] = data['TAVG'].apply(fahr_to_celsius)
+
+monthly_data = pd.DataFrame()
+
+data['TIME_STR'] = data['DATE'].astype(str)
+data['YEAR'] = data['TIME_STR'].str.slice(start = 0, stop = 4)
+data['MONTH'] = data['TIME_STR'].str.slice(start = 4,stop = 6)
+
+grouped = data.groupby(['YEAR','MONTH'])
+
+mean_col = ['TAVG']
+
+for key,group in grouped:
+  mean_values=group[mean_col].mean()
+  monthly_data=monthly_data.append(mean_values,ignore_index=True)
+
+  new_name={'TAVG':'temp_celsius'}
+monthly_data=monthly_data.rename(columns=new_name)
 
 #CAUTION!!! DON'T EDIT THIS PART START
 # This test print should print the length of variable monthly_data
