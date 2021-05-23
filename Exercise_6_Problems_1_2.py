@@ -17,7 +17,9 @@ import numpy as np
 data = None
 
 # YOUR CODE HERE 1
-
+fp = "data/1091402.txt"
+#Read in the data from the file:
+data = pd.read_csv(fp,delim_whitespace = True,skiprows = [1], na_values = [-9999])
 # ### Part 2 
 # 
 # In this section, you will calculate simple statistics based on the input data:
